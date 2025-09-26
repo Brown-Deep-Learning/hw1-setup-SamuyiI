@@ -12,8 +12,9 @@ class Square:
     Returns:
         None
     """
-    def __init__(self):
-        pass
+    def __init__(self, name, length):
+        self.name = name
+        self.length = length
 
 
 class Multiplier:
@@ -22,7 +23,7 @@ class Multiplier:
     Args:
         None
     """
-    def __call__(self):
+    def __call__(self, num1, num2):
         """
         Implement the __call__ method here
         Args:
@@ -32,7 +33,10 @@ class Multiplier:
         Returns:
             result (int): The result of the multiplication
         """
-        pass
+        self.num1 = num1
+        self.num2 = num2
+
+        return num1 * num2
 
 
 class LoggingTape:
@@ -43,25 +47,27 @@ class LoggingTape:
         """
         Initialize variables
         """
-        self.logs = ...
+        self.logs = []
 
     def __enter__(self):
         """
         Called when entering the context
         """
-        pass
+        Logger.logging_tape = self
+
+        return self
 
     def __exit__(self, *args):
         """
         Called when exiting the context
         """
-        pass
+        Logger.logging_tape = None
 
     def add_to_log(self, new_log):
         """
         Add a new log to the logs
         """
-        pass
+        self.logs.append(new_log)
 
     def print_logs(self):
         """
@@ -82,17 +88,19 @@ class Car(Logger):
     def travel(self, distance):
         self.logging_tape.add_to_log(f"Traveled Distance {distance}")
 
-
 # Local tests
 if __name__ == "__main__":
     # Create a square object
     square1 = Square("square1", 5)
     assert square1.name == "square1"
+    print("✓ Square name assertion passed")
     assert square1.length == 5
+    print("✓ Square length assertion passed")
 
     # Create a multiplier object
     multiplier = Multiplier()
     assert multiplier(5, 10) == 50
+    print("✓ Multiplier assertion passed")
 
     # Create a logging tape object
     with LoggingTape() as tape: #runs LoggingTape's __enter__()
